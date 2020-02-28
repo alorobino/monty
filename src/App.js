@@ -1,26 +1,32 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Cards from './Cards'
+// import Card from './Card';
 
-function App() {
+function indexAce() {
+  return (Math.floor(Math.random()*3))
+}
+
+class App extends React.Component {
+  constructor(props) {
+    super(props)
+    let cards = [{face:'king', up: false},{face:'king', up: false},{face:'king', up: false}]
+    cards[indexAce()].face = "ace"
+    this.state = {cards: cards}
+  }
+
+  flip(index){
+    let cardsCopy = this.state.cards.slice()
+    cardsCopy[index].up = !cardsCopy[index].up
+    this.setState({cards: cardsCopy})
+  } 
+
+  render() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <Cards flip={(x) => this.flip(x)} cards={this.state.cards}/>
     </div>
-  );
+  )};
 }
 
 export default App;
